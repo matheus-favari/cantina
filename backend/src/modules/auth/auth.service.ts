@@ -1,8 +1,8 @@
 import { prisma } from "../../config/prisma";
 import AppError from "../../errors/AppError";
 import { defaultCategories } from "../categories/defaultCategories";
-import { RegisterDTO } from "./auth.types";
 import bcrypt from "bcrypt";
+import { RegisterDTO } from "./auth.schema";
 
 const registerService = async (data: RegisterDTO) => {
   console.log("Data", data);
