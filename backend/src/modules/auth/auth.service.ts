@@ -1,4 +1,5 @@
 import { prisma } from "../../config/prisma";
+import AppError from "../../errors/AppError";
 import { defaultCategories } from "../categories/defaultCategories";
 import { RegisterDTO } from "./auth.types";
 import bcrypt from "bcrypt";
@@ -13,7 +14,7 @@ const registerService = async (data: RegisterDTO) => {
   });
 
   if (userAlreadyExists) {
-    throw new Error("Email já cadastrado");
+    throw new AppError("Email já cadastrado", 409);
   }
 
   const hashedPassword = await bcrypt.hash(data.password, 10);
