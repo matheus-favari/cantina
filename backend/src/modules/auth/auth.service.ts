@@ -1,6 +1,7 @@
 import { prisma } from "../../config/prisma";
 import { defaultCategories } from "../categories/defaultCategories";
 import { RegisterDTO } from "./auth.types";
+import bcrypt from "bcrypt";
 
 const registerService = async (data: RegisterDTO) => {
   console.log("Data", data);
@@ -15,6 +16,10 @@ const registerService = async (data: RegisterDTO) => {
     throw new Error("Email já cadastrado");
   }
 
+  const hashedPassword = await bcrypt.hash(data.password, 10);
+
+  console.log("hashedPassword", hashedPassword);
+
   const result = await prisma.$transaction(async (tx) => {
     const canteen = await tx.canteen.create({
       data: {
@@ -28,7 +33,7 @@ const registerService = async (data: RegisterDTO) => {
         name: data.name,
 
         email: data.email,
-        passwordHash: data.password,
+        passwordHash: hashedPassword,
         role: "OWNER",
         canteenId: canteen.id,
       },
