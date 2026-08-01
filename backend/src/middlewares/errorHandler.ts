@@ -19,8 +19,6 @@ const errorHandler = (error: Error, _req: Request, res: Response, _next: NextFun
     });
   }
 
-  console.log("error", error);
-
   return res.status(500).json({
     message: "Erro interno do servidor",
   });

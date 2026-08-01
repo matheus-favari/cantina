@@ -8,9 +8,17 @@ const registerSchema = z.object({
     .min(3, { error: "O nome da cantina deve conter um mínimo de 3 caracteres" }),
   segment: z.enum(CanteenSegment, { error: "Segmento inválido" }),
   name: z.string().min(3, { error: "O nome do responsável deve conter um mínimo de 3 caracteres" }),
-  email: z.email("Email inválido"),
+  email: z.email("Informe um email válido"),
   password: passwordSchema,
 });
 
-export { registerSchema };
-export type RegisterDTO = z.infer<typeof registerSchema>;
+const loginSchema = z.object({
+  email: z.email("Informe um email válido"),
+  password: z.string().min(1, { error: "Informe a senha" }),
+});
+
+type RegisterDTO = z.infer<typeof registerSchema>;
+type LoginDTO = z.infer<typeof loginSchema>;
+
+export { loginSchema, registerSchema };
+export { LoginDTO, RegisterDTO };
