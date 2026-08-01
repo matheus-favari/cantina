@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import registerService from "./auth.service";
+import { loginService, registerService } from "./auth.service";
 
 const registerController = async (req: Request, res: Response) => {
   const result = await registerService(req.body);
@@ -7,4 +7,10 @@ const registerController = async (req: Request, res: Response) => {
   return res.status(201).json(result);
 };
 
-export default registerController;
+const loginController = async (req: Request, res: Response) => {
+  const result = await loginService(req.body);
+
+  return res.status(200).json(result);
+};
+
+export { loginController, registerController };
